@@ -1,0 +1,145 @@
+---
+title: 'Spotify & media integration'
+description: 'Display the currently playing song in your VRChat chatbox — works with Spotify and any Windows media player.'
+---
+
+Display the currently playing song in your VRChat chatbox in real time. TTS Voice Wizard supports two modes: a dedicated Spotify integration using the official Spotify Web API, and a universal Windows media mode that works with any media player that registers with Windows media controls.
+
+<Tabs>
+  <Tab title="Spotify (PKCE OAuth)">
+    The Spotify integration connects to the official Spotify Web API using PKCE OAuth — a secure authorization flow that does not require a client secret. The app polls Spotify every ~1,500 ms and sends the current track to your chatbox whenever the song changes.
+
+    <Note>
+      The Spotify integration uses the official Spotify Web API. No third-party tokens or browser sessions are required.
+    </Note>
+
+    ## Setup
+
+    <Steps>
+      <Step title="Open the Spotify tab">
+        In TTS Voice Wizard, navigate to the **Spotify** tab.
+      </Step>
+      <Step title="Connect your Spotify account">
+        Click **Connect Spotify**. A browser window opens and takes you to Spotify's authorization page.
+      </Step>
+      <Step title="Authorize the app">
+        Log in to Spotify (if prompted) and approve access. The app requests read-only permissions for your currently playing track and playback state.
+      </Step>
+      <Step title="Return to TTS Voice Wizard">
+        After you approve, Spotify redirects back to the app. TTS Voice Wizard receives a PKCE access token and begins polling immediately. The **Connect Spotify** button turns green when the connection is active.
+      </Step>
+    </Steps>
+
+    ## How it works
+
+    Once connected, TTS Voice Wizard polls the Spotify API every 1,500 ms (configurable). When the track changes, it builds a display string using your custom format and sends it to the VRChat chatbox and/or KAT overlay. The `lastSong` field prevents the same track from being sent repeatedly.
+
+    Tokens are refreshed automatically before expiry — you do not need to reconnect after the initial setup unless you revoke access.
+
+    ## Customizing the display format
+
+    The display string is fully configurable. Edit the format in **Settings → Spotify → Custom format**. The default is:
+
+    ```
+    {pause} {title} - {artist}
+    ```
+
+    ### Available variables
+
+    | Variable | Description |
+    |---|---|
+    | `{title}` | Track title |
+    | `{artist}` | Primary artist name |
+    | `{allArtists}` | All featured artists, comma-separated |
+    | `{album}` | Album name |
+    | `{albumArtist}` | Album artist |
+    | `{pause}` | ▶️ when playing, ⏸️ when paused |
+    | `{progressMinutes}` | Playback position in `mm:ss` format |
+    | `{durationMinutes}` | Total track duration in `mm:ss` format |
+    | `{progressHours}` | Playback position in `hh:mm:ss` format |
+    | `{durationHours}` | Total duration in `hh:mm:ss` format |
+    | `{spotifyVolume}` | Active device volume (0–100) |
+    | `{spotifySymbol}` | Built-in Spotify glyph for KAT avatars |
+    | `{progressBar E:🎵 L:10}` | Graphical progress bar with custom emoji and length |
+    | `{time}` | Current time (12-hour, e.g. `3:45 PM`) |
+    | `{timeSec}` | Current time (12-hour with seconds) |
+    | `{time24}` | Current time (24-hour, e.g. `15:45`) |
+    | `{time24Sec}` | Current time (24-hour with seconds) |
+    | `{bpm}` | Current heart rate BPM (from OSC listener or Pulsoid) |
+    | `{bpmStats}` | Heart rate trend indicator (🔺 rising, 🔻 falling) |
+    | `{lyrics}` | Spotify lyrics line (when available) |
+    | `{counter1}` – `{counter6}` | Current value of VRChat contact counters 1–6 |
+    | `{nline}` | Soft line break in the chatbox |
+
+    **Examples:**
+
+    ```
+    🎵 {title} by {artist}
+    ```
+
+    ```
+    Now playing: {title} — {progressMinutes}/{durationMinutes}
+    ```
+
+    <Tip>
+      Use `{pause}` in your format string to show a pause indicator when music stops. This lets viewers see at a glance whether you are actively listening.
+    </Tip>
+
+    ## Settings reference
+
+    | Setting | Default | Description |
+    |---|---|---|
+    | Connect on start | Off | Automatically connect to Spotify when the app launches |
+    | Poll interval | 1,500 ms | How often to check Spotify for the current track. Minimum is 1,500 ms |
+    | Spam prevention | On | Logs the track info to the activity log each poll cycle |
+    | Custom format | `{pause} {title} - {artist}` | The display string sent to VRChat |
+    | Periodic display | Off | Re-sends the current track on every poll tick, not just on track change |
+    | Stop when paused | Off | Pauses chatbox output while the track is paused |
+
+    ## Media presets
+
+    Media presets save and restore your Spotify/media display configuration — format string, poll interval, periodic mode, stop-when-paused, and spam log settings — in one click.
+
+    To save a preset, configure your display settings and click **Save preset** in the media presets panel. Select a saved preset from the dropdown to restore it instantly. Presets are stored with your TTS Voice Wizard settings and persist between sessions.
+  </Tab>
+
+  <Tab title="Windows media (any player)">
+    Windows media mode works with any application that integrates with the Windows System Media Transport Controls — including the Spotify desktop app, YouTube Music (in Edge or Chrome), Foobar2000, VLC, and more. No account connection is needed.
+
+    ## Setup
+
+    <Steps>
+      <Step title="Enable Windows media">
+        In TTS Voice Wizard, go to the **Spotify** tab and enable the **Windows Media** toggle.
+      </Step>
+      <Step title="Select approved sources">
+        When a media player starts, it appears in the approved sources list. Check the box next to each player you want TTS Voice Wizard to display.
+      </Step>
+      <Step title="Play something">
+        Start playing a track in your preferred app. TTS Voice Wizard detects the change and sends the formatted string to VRChat.
+      </Step>
+    </Steps>
+
+    ## How it works
+
+    TTS Voice Wizard uses the `WindowsMediaController` library to listen for system-level media events. When a track changes on an approved source, the app fires immediately without waiting for the poll interval. Periodic mode re-sends the current track on every tick.
+
+    The same custom format string applies as in Spotify mode. The `{source}` variable is also available in Windows media mode and shows the name of the active media source (e.g., `Spotify.exe`, `msedge.exe`).
+
+    ### Additional variable
+
+    | Variable | Description |
+    |---|---|
+    | `{source}` | The process name of the active media source |
+
+    ## Settings reference
+
+    | Setting | Default | Description |
+    |---|---|---|
+    | Windows media toggle | Off | Enables Windows media detection |
+    | Approved sources | (empty) | Checked sources are allowed to output to VRChat |
+    | Periodic display | Off | Re-sends track info on every poll tick |
+    | Stop when paused | Off | Suppresses output while the player is paused |
+    | Custom format | `{pause} {title} - {artist}` | Shared with Spotify mode |
+  </Tab>
+</Tabs>

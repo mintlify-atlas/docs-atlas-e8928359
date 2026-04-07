@@ -1,0 +1,85 @@
+---
+title: 'Battery life display'
+description: 'Show VR controller and tracker battery levels in your VRChat chatbox via XSOverlay.'
+---
+
+Show VR controller, tracker, and headset battery levels in your VRChat chatbox. TTS Voice Wizard receives battery data from XSOverlay over OSC and automatically updates the chatbox when values change.
+
+## Requirements
+
+- **XSOverlay** — available on [Steam](https://store.steampowered.com/app/1173510/XSOverlay/). XSOverlay reads battery data from your VR runtime and broadcasts it over OSC.
+
+## Setup
+
+<Steps>
+  <Step title="Get XSOverlay">
+    Purchase and install [XSOverlay](https://store.steampowered.com/app/1173510/XSOverlay/) from Steam. Launch it alongside SteamVR.
+  </Step>
+  <Step title="Enable OSC output in XSOverlay">
+    In XSOverlay settings, enable **OSC output**. XSOverlay will start broadcasting device battery levels over UDP.
+  </Step>
+  <Step title="Enable the OSC listener in TTS Voice Wizard">
+    In TTS Voice Wizard, open the **Heart Rate** tab and find the **OSC Listener** section. Click **Start OSC Listener**.
+
+    Confirm the receive port is set to **4026** — this matches XSOverlay's default OSC output port.
+  </Step>
+  <Step title="Put on your headset">
+    Once SteamVR is running and XSOverlay is active, battery data starts flowing automatically. You will see battery readings appear in the TTS Voice Wizard activity log.
+  </Step>
+  <Step title="Battery info in VRChat">
+    When battery values change, TTS Voice Wizard sends an update to your VRChat chatbox. The display uses the values from your media/Spotify custom format string if you include battery variables there.
+  </Step>
+</Steps>
+
+<Note>
+  XSOverlay sends battery data automatically once OSC output is enabled — no additional configuration is required beyond enabling that setting.
+</Note>
+
+<Tip>
+  Battery info only updates when values change significantly, preventing chatbox spam. If you want to include battery levels in your media display, add the appropriate variable to your custom format string on the Spotify tab.
+</Tip>
+
+## Battery data fields
+
+TTS Voice Wizard tracks the following values received from XSOverlay:
+
+| OSC address | Internal field | Description |
+|---|---|---|
+| `/avatar/parameters/averageTrackerBattery` | `globalAverageTrackerBattery` | Average battery across all trackers (0–100%) |
+| `/avatar/parameters/leftControllerBattery` | `globalLeftControllerBattery` | Left controller battery (0–100%) |
+| `/avatar/parameters/rightControllerBattery` | `globalRightControllerBattery` | Right controller battery (0–100%) |
+| `/avatar/parameters/averageControllerBattery` | `globalAverageControllerBattery` | Average battery across both controllers (0–100%) |
+| `/avatar/parameters/HMDBat` | `globalHMDBattery` | Headset battery (0–100%) |
+
+String fields with charge indicators are also maintained:
+
+| Field | Description |
+|---|---|
+| `trackerCharge` | ⚡ when tracker battery is rising |
+| `controllerChargeL` | ⚡ when left controller battery is rising |
+| `controllerChargeR` | ⚡ when right controller battery is rising |
+| `controllerChargeAVG` | ⚡ when average controller battery is rising |
+| `controllerChargeHMD` | ⚡ when HMD battery is rising |
+
+## Using battery variables in your display format
+
+You can embed battery values directly in your Spotify/media custom format string. This lets you show music and battery levels together in the chatbox.
+
+| Variable | Description |
+|---|---|
+| `{averageTrackerBattery}` | Average tracker battery as an integer (0–100) |
+| `{leftControllerBattery}` | Left controller battery (0–100) |
+| `{rightControllerBattery}` | Right controller battery (0–100) |
+| `{averageControllerBattery}` | Average controller battery (0–100) |
+| `{HMDBattery}` | Headset battery (0–100) |
+| `{TCharge}` | Tracker charge indicator (⚡ or empty) |
+| `{LCharge}` | Left controller charge indicator |
+| `{RCharge}` | Right controller charge indicator |
+| `{AVGCharge}` | Average controller charge indicator |
+| `{HMDCharge}` | HMD charge indicator |
+
+**Example format string:**
+
+```
+{pause} {title} - {artist} | 🔋 L:{leftControllerBattery}% R:{rightControllerBattery}%
+```

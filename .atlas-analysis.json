@@ -1,0 +1,98 @@
+{
+  "projectType": "saas",
+  "projectName": "TTS Voice Wizard",
+  "projectDescription": "A Windows desktop application that converts speech to text and text to speech, sending output as OSC messages to VRChat avatars with integrations for Spotify, heart rate, voice commands, and 15+ TTS engines.",
+  "theme": "almond",
+  "primaryColor": "#8f9ec5",
+  "lightColor": "#303045",
+  "darkColor": "#c1cbdc",
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Documentation",
+        "groups": [
+          {
+            "group": "Get Started",
+            "pages": [
+              "introduction",
+              "quickstart",
+              "installation",
+              "text-in-vrchat"
+            ]
+          },
+          {
+            "group": "Core Features",
+            "pages": [
+              "features/speech-to-text",
+              "features/text-to-speech",
+              "features/translation",
+              "features/word-replacements",
+              "features/voice-commands"
+            ]
+          },
+          {
+            "group": "Integrations",
+            "pages": [
+              "integrations/spotify-media",
+              "integrations/heart-rate",
+              "integrations/battery-life",
+              "integrations/chatgpt",
+              "integrations/obs-streaming"
+            ]
+          },
+          {
+            "group": "Advanced",
+            "pages": [
+              "advanced/osc-setup",
+              "advanced/hotkeys",
+              "advanced/counters",
+              "advanced/virtual-cable",
+              "advanced/troubleshooting"
+            ]
+          },
+          {
+            "group": "VoiceWizardPro",
+            "pages": [
+              "pro/overview",
+              "pro/get-key",
+              "pro/premium-voices"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "keyFeatures": [
+    "Speech-to-Text via Azure, Vosk, Whisper, Deepgram, ElevenLabs, and Windows built-in recognition",
+    "Text-to-Speech with 15+ engines including Azure, Amazon Polly, Google Cloud, IBM Watson, ElevenLabs, OpenAI, TikTok, and System Speech",
+    "OSC integration to display speech as text on VRChat avatars via KillFrenzyAvatarText or VRChat Chatbox",
+    "Real-time translation into 50+ languages via Azure and DeepL",
+    "Spotify and Windows Media integration to show currently playing song in VRChat",
+    "Heart rate display via Pulsoid or HRtoVRChat_OSC",
+    "VR controller and tracker battery life display via XSOverlay OSC",
+    "Voice commands to control VRChat avatar OSC parameters",
+    "Interactive contact-receiver counters for VRChat",
+    "Word replacements with regex and boundary matching",
+    "VoiceWizardPro premium tier with cloud voices and DeepGram Nova-2 STT",
+    "ChatGPT integration for AI-driven responses",
+    "OBS text output for streaming and recording",
+    "Hotkey support for VR controllers and mouse"
+  ],
+  "publicApiSurface": [
+    "OSC send: /chatbox/input (VRChat Chatbox text)",
+    "OSC send: KillFrenzyAvatarText parameters",
+    "OSC receive: /avatar/parameters/* (VRChat avatar parameters)",
+    "OSC receive: heart rate data (port 4026)",
+    "OSC receive: battery/tracker data from XSOverlay",
+    "OSC receive: VRChat contact receiver counters",
+    "WebSocket server for external speech recognition input",
+    "Settings import/export (JSON/XML)",
+    "Voice presets save/load",
+    "Media presets save/load",
+    "DoSpeech.MainDoTTS(TTSMessage)",
+    "VoiceCommands.MainDoVoiceCommand(string text)",
+    "WordReplacements.MainDoWordReplacement(string text)",
+    "SpotifyAddon (PKCE OAuth flow, song display)",
+    "HeartratePulsoid.ConnectToPulsoid(string token)"
+  ]
+}

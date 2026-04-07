@@ -1,0 +1,62 @@
+---
+title: "OSC configuration"
+description: "Configure OSC send/receive addresses and ports for VRChat communication."
+---
+
+TTS Voice Wizard uses OSC (Open Sound Control) over UDP to communicate with VRChat and receive data from external apps. The defaults work for most setups — both VRChat and TTS Voice Wizard running on the same PC.
+
+## Default ports
+
+| Direction | Address | Port | Purpose |
+|-----------|---------|------|---------|
+| Send | 127.0.0.1 | 9000 | Send chatbox text and avatar parameters to VRChat |
+| Receive | 127.0.0.1 | 4026 | Receive heart rate, battery, and other data |
+| Receive | 127.0.0.1 | 9001 | Receive avatar parameter feedback from VRChat |
+
+## Changing OSC address and port
+
+<Steps>
+  <Step title="Open OSC settings">
+    In TTS Voice Wizard, navigate to the **OSC** tab.
+  </Step>
+  <Step title="Enter your address and port">
+    Update the **OSC Address** (default `127.0.0.1`) and **OSC Port** (default `9000`) fields.
+  </Step>
+  <Step title="Apply">
+    Click **Apply** — the change takes effect immediately without restarting the app.
+  </Step>
+</Steps>
+
+## OSC addresses used
+
+### Sending to VRChat
+
+| OSC Address | Type | Description |
+|-------------|------|-------------|
+| `/chatbox/input` | string, bool | Send text to VRChat chatbox. Bool controls immediate display. |
+| `/chatbox/typing` | bool | Show/hide the typing indicator in VRChat |
+| `/avatar/parameters/<name>` | varied | Set any avatar parameter by name |
+
+### Receiving from external apps
+
+| OSC Address | Port | Source |
+|-------------|------|--------|
+| Heart rate data | 4026 | HRtoVRChat_OSC, XSOverlay |
+| Battery data | 4026 | XSOverlay |
+| Avatar parameter feedback | 9001 | VRChat |
+
+## Multi-PC setup
+
+If VRChat is running on a different PC on your local network:
+
+1. Find the VRChat PC's local IP address (e.g. `192.168.1.50`)
+2. In TTS Voice Wizard, change **OSC Address** to that IP
+3. Ensure Windows Firewall on the VRChat PC allows UDP on port 9000
+
+<Note>
+  VRChat's OSC must be enabled before it will receive messages. Enable it via **Action Menu → Options → OSC → Enable** inside VRChat.
+</Note>
+
+<Warning>
+  If you change the receive port from 4026, you must update the matching setting in XSOverlay or HRtoVRChat_OSC to send to the new port.
+</Warning>

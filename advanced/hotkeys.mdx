@@ -1,0 +1,56 @@
+---
+title: "Hotkeys and push-to-talk"
+description: "Assign keyboard, mouse, or VR controller hotkeys to control speech recognition."
+---
+
+Hotkeys let you trigger speech recognition, skip TTS playback, and more — without touching the app window. This is especially useful in VR where you can bind a controller button to act as a push-to-talk button.
+
+## Assigning a hotkey
+
+<Steps>
+  <Step title="Open the Hotkeys tab">
+    In TTS Voice Wizard, click the **Hotkeys** section in the navigation.
+  </Step>
+  <Step title="Click the hotkey field">
+    Click on the hotkey input field for the action you want to assign.
+  </Step>
+  <Step title="Press your key combination">
+    Press the desired key or key combination on your keyboard or mouse. The binding is saved automatically.
+  </Step>
+</Steps>
+
+## Available hotkey actions
+
+| Action | Description |
+|--------|-------------|
+| Start/stop STT | Toggle speech recognition on and off (push-to-talk or toggle mode) |
+| Skip TTS | Stop the currently playing TTS audio immediately |
+| Clear text box | Clear the text input field |
+| Toggle continuous mode | Switch between push-to-talk and always-listening mode |
+
+## Using VR controller buttons
+
+You can assign a VR controller button as your push-to-talk hotkey without leaving VR:
+
+<Steps>
+  <Step title="Open SteamVR controller bindings">
+    In SteamVR, go to **Settings → Controller Bindings** and select TTS Voice Wizard (or your active game).
+  </Step>
+  <Step title="Bind a button to a keyboard key">
+    Assign a rarely-used button (e.g., left thumbstick click) to simulate a keyboard key press — for example, `F9`.
+  </Step>
+  <Step title="Assign that key in TTS Voice Wizard">
+    In TTS Voice Wizard's Hotkeys tab, set the STT hotkey to the same key (`F9`).
+  </Step>
+  <Step title="Test in VR">
+    Press the controller button — speech recognition should start and stop accordingly.
+  </Step>
+</Steps>
+
+<Tip>
+  Choose a keyboard key that no other app uses. Function keys (F9–F12) are usually safe choices.
+</Tip>
+
+## Refocus window setting
+
+When **Refocus Window** is enabled, TTS Voice Wizard automatically returns keyboard focus to the window you were using before STT started. This prevents the app from stealing focus from VRChat or other apps when you activate push-to-talk.

@@ -1,0 +1,108 @@
+---
+title: 'Heart rate display'
+description: 'Display your real-time heart rate in the VRChat chatbox — great for VTubers and streamers.'
+---
+
+Display your live heart rate in the VRChat chatbox. TTS Voice Wizard supports two methods: a direct WebSocket connection to Pulsoid, and an OSC listener that receives heart rate data from external tools such as HRtoVRChat_OSC.
+
+<Tabs>
+  <Tab title="Pulsoid">
+    Pulsoid is a heart rate streaming service that reads data from Bluetooth and ANT+ heart rate monitors via a phone or PC app. TTS Voice Wizard connects to Pulsoid using a persistent WebSocket, so your BPM is updated in real time without polling overhead.
+
+    <Note>
+      Pulsoid requires a compatible Bluetooth or ANT+ heart rate monitor and the Pulsoid app installed on your phone or PC.
+    </Note>
+
+    ## Setup
+
+    <Steps>
+      <Step title="Create a Pulsoid account">
+        Sign up at [https://pulsoid.net](https://pulsoid.net) and install the Pulsoid app on your phone or PC.
+      </Step>
+      <Step title="Connect your heart rate monitor">
+        Pair a compatible Bluetooth or ANT+ heart rate monitor with the Pulsoid app and confirm that live data is streaming.
+      </Step>
+      <Step title="Get your auth token">
+        In your Pulsoid account settings, navigate to the developer or API section and copy your personal access token.
+      </Step>
+      <Step title="Enter the token in TTS Voice Wizard">
+        Open TTS Voice Wizard, go to the **Heart Rate** tab, and paste your Pulsoid auth token into the **Pulsoid Auth Token** field.
+      </Step>
+      <Step title="Connect">
+        Click **Connect Pulsoid**. The button turns green when the WebSocket connection is established. You will see `[Pulsoid WebSocket Connected]` in the activity log.
+      </Step>
+    </Steps>
+
+    ## How it works
+
+    TTS Voice Wizard opens a WebSocket connection to `wss://dev.pulsoid.net/api/v1/data/real_time` using your token. Incoming heart rate packets are parsed in real time. The app then fires a timer every 1,500 ms (configurable) to send the current BPM to VRChat.
+
+    Spam prevention is built in: output is only sent when the heart rate value changes from the previous reading, so your chatbox is not flooded with identical values.
+
+    If the connection drops, the app attempts to reconnect automatically after 5 seconds.
+
+    ## OSC avatar parameters
+
+    On each timer tick, the following OSC parameters are sent to your avatar:
+
+    | Parameter | Type | Description |
+    |---|---|---|
+    | `/avatar/parameters/HR` | int | Current BPM |
+    | `/avatar/parameters/onesHR` | int | Ones digit of BPM |
+    | `/avatar/parameters/tensHR` | int | Tens digit of BPM |
+    | `/avatar/parameters/hundredsHR` | int | Hundreds digit of BPM |
+    | `/avatar/parameters/HRPercent` | float | BPM as a fraction of 255 (0.0–1.0) |
+    | `/avatar/parameters/isHRConnected` | bool | `true` while connected, `false` on disconnect |
+
+    ## Settings reference
+
+    | Setting | Default | Description |
+    |---|---|---|
+    | Connect on start | Off | Automatically connect to Pulsoid when the app launches |
+    | Poll interval | 1,500 ms | How often BPM is sent to VRChat. Minimum is 1,500 ms |
+    | Output heart rate directly | Off | Enables chatbox and KAT output for BPM readings |
+    | Spam log | On | Logs each BPM reading to the activity log |
+  </Tab>
+
+  <Tab title="HRtoVRChat_OSC">
+    This method uses TTS Voice Wizard's built-in OSC listener to receive heart rate data from [HRtoVRChat_OSC](https://github.com/200Tigersbloxed/HRtoVRChat_OSC) by 200Tigersbloxed. HRtoVRChat_OSC supports a wide range of heart rate devices and sends data over OSC.
+
+    ## Setup
+
+    <Steps>
+      <Step title="Install HRtoVRChat_OSC">
+        Download and configure [HRtoVRChat_OSC](https://github.com/200Tigersbloxed/HRtoVRChat_OSC) for your heart rate device. Follow its own setup instructions to get your device streaming.
+      </Step>
+      <Step title="Set the OSC output port">
+        In HRtoVRChat_OSC, configure the OSC output target to send to port **4026** on `127.0.0.1`. This matches TTS Voice Wizard's default listener port.
+      </Step>
+      <Step title="Enable the OSC listener in TTS Voice Wizard">
+        In TTS Voice Wizard, open the **Heart Rate** tab and find the **OSC Listener** section. Click **Start OSC Listener**. You will see `[OSC Listener Activated (4026)]` in the activity log.
+      </Step>
+      <Step title="Confirm data is arriving">
+        Start your heart rate device. When the first packet arrives, the activity log shows `[First OSC Received]` and the heart rate display turns green.
+      </Step>
+    </Steps>
+
+    ## How it works
+
+    TTS Voice Wizard listens on UDP port 4026 for OSC messages. When a `/avatar/parameters/HR` message is received, the app reads the BPM value and updates the chatbox. A built-in skip counter reduces chatbox update frequency — only every 5th packet triggers a VRChat output by default, preventing spam.
+
+    ## OSC fields tracked
+
+    | Field | Description |
+    |---|---|
+    | `globalBPM` | Current BPM as a string |
+    | `HRPrevious` | BPM from the last update cycle |
+    | `HREleveated` | 🔺 when rising, 🔻 when falling, empty when steady |
+    | `currentHR` | Current BPM as an integer |
+
+    ## Settings reference
+
+    | Setting | Default | Description |
+    |---|---|---|
+    | OSC listener port | 4026 | UDP port TTS Voice Wizard listens on for incoming OSC data |
+    | Start on app launch | Off | Automatically start the OSC listener when the app opens |
+    | Spam log | On | Logs each received BPM reading to the activity log |
+  </Tab>
+</Tabs>

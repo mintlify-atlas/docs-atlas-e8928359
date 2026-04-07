@@ -1,0 +1,75 @@
+---
+title: "Displaying text in VRChat"
+description: "Three ways to show your transcribed speech as text on your VRChat avatar: VRChat Chatbox, KillFrenzyAvatarText, and Frosty's Billboard."
+---
+
+TTS Voice Wizard can display your transcribed speech as visible text in VRChat using any of three methods. Each method has different setup requirements and capabilities.
+
+<Info>
+  The app sends OSC messages over UDP to `127.0.0.1` on port `9000` by default. Both the address and port can be changed in the app's OSC settings. See [OSC setup](/advanced/osc-setup) for details.
+</Info>
+
+## Method 1: VRChat chatbox (recommended)
+
+The VRChat chatbox is built into the game and requires no avatar modifications. Text appears above your avatar's head in a speech bubble visible to nearby players.
+
+**OSC address:** `/chatbox/input`  
+**Default port:** `9000`
+
+### Enable the VRChat chatbox
+
+<Steps>
+  <Step title="Enable OSC in VRChat">
+    Open the **Action Menu** in VRChat (hold `R` on keyboard, or the menu button on your controller), then go to **Options** → **OSC** → toggle **Enable** on.
+  </Step>
+
+  <Step title="Enable chatbox output in TTS Voice Wizard">
+    In the app, make sure the **Send VRChat Chatbox** toggle is enabled. It is on by default (`SendVRCChatBoxSetting = True`).
+  </Step>
+
+  <Step title="Verify OSC address and port">
+    The app defaults to `127.0.0.1` and port `9000`, which matches VRChat's default OSC listener. If you have changed either value, you can restore them in the app's OSC settings panel.
+  </Step>
+</Steps>
+
+<Note>
+  The **Hide Delay** setting (default: 10 seconds) automatically clears the chatbox after your microphone has been idle for that duration. You can adjust this value or disable it entirely in the app's settings.
+</Note>
+
+## Method 2: KillFrenzyAvatarText (KAT)
+
+[KillFrenzyAvatarText](https://github.com/killfrenzy96/KillFrenzyAvatarText) is a text display system built for VRChat avatars. It supports longer text than the built-in chatbox and renders directly on the avatar using Unity shader techniques.
+
+KAT requires you to add it to your avatar in Unity before uploading. The app encodes each character as an OSC float and sends it to your avatar's parameters (`KAT_CharSync0`–`KAT_CharSync15`, `KAT_Pointer`, `KAT_Visible`).
+
+### Set up KAT
+
+<Steps>
+  <Step title="Add KAT to your avatar">
+    Follow the setup instructions in the [KillFrenzyAvatarText GitHub repository](https://github.com/killfrenzy96/KillFrenzyAvatarText). This requires Unity and the VRChat SDK. Upload your modified avatar after setup.
+  </Step>
+
+  <Step title="Enable KAT output in TTS Voice Wizard">
+    In the app, enable the **KAT** toggle (labeled **Send to KAT / OSC**). This tells the app to send the character-encoded OSC messages instead of (or in addition to) the chatbox message.
+  </Step>
+
+  <Step title="Choose your sync parameter count">
+    KAT supports 4, 8, or 16 sync parameters per packet. Match the setting in the app to the number of sync parameters you configured on your avatar. More parameters mean faster text rendering but use more avatar parameter budget.
+  </Step>
+</Steps>
+
+## Method 3: Frosty's Billboard
+
+[Frosty's Billboard](https://github.com/Frosty704/Billboard) is a container for KAT that adds a speech bubble held in your hand. It requires KAT to be set up on your avatar first, then adds the billboard display on top.
+
+Follow the instructions in the [Billboard GitHub repository](https://github.com/Frosty704/Billboard) after completing KAT setup. No additional configuration is needed in TTS Voice Wizard — once KAT is working, Billboard displays the same text automatically.
+
+## Comparison
+
+| Feature | VRChat chatbox | KAT | Billboard |
+|---------|---------------|-----|-----------|
+| Avatar modification required | No | Yes | Yes (requires KAT) |
+| Setup complexity | Minimal | Moderate | Moderate |
+| Text length | VRChat limit (~144 chars) | Longer, depends on avatar setup | Same as KAT |
+| Visible to others | Yes | Yes | Yes |
+| Hand-held speech bubble | No | No | Yes |

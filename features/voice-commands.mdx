@@ -1,0 +1,78 @@
+---
+title: 'Voice commands'
+description: 'Trigger VRChat avatar OSC parameter changes using spoken phrases — hands-free avatar control.'
+---
+
+Voice commands let you control your VRChat avatar with spoken phrases. When TTS Voice Wizard recognizes a phrase that matches a configured command, it sends an OSC message to VRChat with the parameter and value you specified.
+
+This gives you hands-free control over avatar expressions, animations, and any other OSC-accessible parameter — without opening the in-game Action Menu.
+
+## How it works
+
+Every time TTS Voice Wizard finishes recognizing speech, it checks the recognized text against your list of voice commands. Matching is case-insensitive. If the text contains a command phrase, TTS Voice Wizard sends the corresponding OSC message immediately — before the text is sent to the chatbox or spoken by TTS.
+
+Each voice command stores four values:
+
+| Field | Description |
+|-------|-------------|
+| **Phrase** | The word or phrase that triggers the command |
+| **OSC address** | The OSC parameter path on the avatar |
+| **Type** | The data type to send: `Bool`, `Int`, or `Float` |
+| **Value** | The value to send when the phrase is recognized |
+
+Commands are only active when their checkbox in the list is checked. Unchecking a command disables it without deleting it.
+
+## Setting up voice commands
+
+<Steps>
+  <Step title="Open the Voice Commands tab">
+    Navigate to the **Voice Commands** tab in TTS Voice Wizard.
+  </Step>
+  <Step title="Enter the trigger phrase">
+    Type the word or phrase you want to speak (e.g., `wave`). This is matched case-insensitively against recognized text.
+  </Step>
+  <Step title="Enter the OSC address">
+    Type the full OSC parameter path (e.g., `/avatar/parameters/Wave`). See [OSC setup](/advanced/osc-setup) for how to find parameter names on your avatar.
+  </Step>
+  <Step title="Select the value type">
+    Choose `Bool`, `Int`, or `Float` from the type selector. This must match the type of the parameter on your avatar.
+  </Step>
+  <Step title="Enter the value">
+    Type the value to send. For Bool, use `true` or `false`. For Int, use a whole number. For Float, use a decimal number (e.g., `1.0`).
+  </Step>
+  <Step title="Add and enable the command">
+    Click **Add** to add the command to the list. Make sure its checkbox is checked for it to be active.
+  </Step>
+</Steps>
+
+## OSC parameter format
+
+VRChat avatar parameters follow this address format:
+
+```
+/avatar/parameters/<ParameterName>
+```
+
+Where `<ParameterName>` is the exact name of the parameter as defined in your avatar's Animator or Expression Parameters list.
+
+<Note>Parameter names are case-sensitive in VRChat. `/avatar/parameters/Wave` and `/avatar/parameters/wave` are different addresses. Match the casing exactly as it appears in your avatar's configuration.</Note>
+
+For more information on finding and configuring avatar parameters, see [OSC setup](/advanced/osc-setup).
+
+## Example commands
+
+| Phrase | OSC address | Type | Value |
+|--------|-------------|------|-------|
+| wave | /avatar/parameters/Wave | Bool | true |
+| dance | /avatar/parameters/Dance | Int | 1 |
+| happy | /avatar/parameters/Mood | Float | 1.0 |
+| stop | /avatar/parameters/Dance | Int | 0 |
+| sad face | /avatar/parameters/Mood | Float | 0.0 |
+
+## Azure TTS voice style changes
+
+When Azure is selected as your TTS engine and the **Voice Style** toggle is enabled, TTS Voice Wizard also checks recognized speech against the list of available Azure speaking styles. If you say the name of a style (e.g., "cheerful", "sad", "newscast"), TTS Voice Wizard switches the active Azure voice style for subsequent TTS output.
+
+This lets you change your TTS voice's emotional tone hands-free, without touching the **Style** dropdown.
+
+<Note>Azure voice style changes via voice commands are only active when Azure TTS is selected and the **Voice Style** toggle is on in the TTS settings. Style names depend on the voice selected — not all Azure voices support all styles.</Note>

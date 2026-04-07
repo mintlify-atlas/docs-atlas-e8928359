@@ -1,0 +1,164 @@
+---
+title: 'Text to Speech'
+description: 'Convert recognized or typed text to audio and send it to VRChat simultaneously.'
+---
+
+Text to Speech (TTS) converts recognized speech (or manually typed text) into audio. At the same time, the text is sent to your VRChat chatbox via OSC — so other players can read what you said while they hear your TTS voice.
+
+You can route TTS audio to a virtual cable to use it as your microphone input in VRChat, effectively replacing your real voice with a TTS voice.
+
+<Note>Over 100 voices are available across all engines. The exact count depends on which engine and subscription tier you use.</Note>
+
+## TTS engines
+
+<AccordionGroup>
+  <Accordion title="System Speech">
+    Free, built-in Windows TTS using `System.Speech.Synthesis`. No setup, no API key.
+
+    **Voices:** Installs with Windows (typically one or two voices per installed language). Additional voices can be added via **Windows Settings → Time & Language → Speech → Add voices**.
+
+    **Controls:**
+    - **Pitch** — adjusts the voice pitch up or down
+    - **Rate** — controls speech speed
+    - **Volume** — controls output level
+
+    Audio can be routed to any output device, including a virtual audio cable.
+  </Accordion>
+
+  <Accordion title="Azure TTS">
+    Microsoft Azure Cognitive Services Neural TTS. Hundreds of voices across dozens of languages, with support for SSML speaking styles (e.g., cheerful, sad, angry, newscast).
+
+    **Requirements:** Azure Cognitive Services key and region, or a VoiceWizardPro subscription with the Pro Azure option enabled.
+
+    **Voices:** Neural voices with multiple styles per voice. Select a voice and style in the **TTS** tab. Speaking styles can also be changed using [voice commands](/features/voice-commands).
+
+    **Controls:** Pitch, rate, and volume sliders in the TTS settings.
+  </Accordion>
+
+  <Accordion title="Amazon Polly">
+    AWS Polly neural and standard voices. Natural-sounding voices with broad language coverage.
+
+    **Requirements:** AWS credentials (Access Key ID and Secret Access Key) configured in the Provider tab, or a VoiceWizardPro subscription with the Pro Amazon option enabled.
+
+    **Voices:** Select from Standard and Neural Polly voices in the voice dropdown.
+  </Accordion>
+
+  <Accordion title="Google Cloud TTS">
+    Google Cloud Text-to-Speech. Standard, WaveNet, and Neural2 voices.
+
+    **Requirements:** VoiceWizardPro subscription. Google TTS is available as a Pro-only engine (`Google (Pro Only)` in the mode selector) — it routes through the VoiceWizardPro cloud backend.
+  </Accordion>
+
+  <Accordion title="IBM Watson">
+    IBM Watson Text to Speech voices.
+
+    **Requirements:** VoiceWizardPro subscription. Available as `IBM Watson (Pro Only)` — routes through the VoiceWizardPro cloud backend.
+  </Accordion>
+
+  <Accordion title="ElevenLabs">
+    Ultra-realistic, AI-generated voices from ElevenLabs. Supports voice cloning and a large library of community voices.
+
+    **Requirements:** Your own ElevenLabs API key entered in the Provider tab.
+
+    **Voices:** Select from voices available on your ElevenLabs account.
+  </Accordion>
+
+  <Accordion title="OpenAI TTS">
+    OpenAI's text-to-speech API. Six built-in voices with natural prosody.
+
+    **Requirements:** Your own OpenAI API key, or a VoiceWizardPro subscription with the Pro OpenAI option enabled.
+
+    **Available voices:** alloy, echo, fable, onyx, nova, shimmer
+  </Accordion>
+
+  <Accordion title="TikTok TTS">
+    Voices from TikTok's internal TTS endpoint. A variety of fun and character voices popular in short-form video content.
+
+    **Requirements:** No API key required. Uses TikTok's public TTS endpoint.
+
+    **Voices:** Select from the available TikTok voice IDs in the voice dropdown.
+  </Accordion>
+
+  <Accordion title="TTSMonster">
+    Voices from [TTSMonster.io](https://ttsmonster.io), including streamer-oriented character voices.
+
+    **Requirements:** TTSMonster account and API key entered in the Provider tab.
+  </Accordion>
+
+  <Accordion title="UberDuck">
+    AI voices from [Uberduck.ai](https://uberduck.ai), including celebrity and character voice clones.
+
+    **Requirements:** Uberduck API key and secret entered in the Provider tab.
+  </Accordion>
+
+  <Accordion title="VoiceForge">
+    Voices from the VoiceForge service.
+
+    **Requirements:** VoiceForge credentials configured in the Provider tab.
+  </Accordion>
+
+  <Accordion title="GladOS">
+    A locally hosted GladOS-style synthesized voice. Runs on your machine via a local API endpoint.
+
+    **Requirements:** A locally running GladOS TTS server. Configure the local endpoint in the Provider tab. Listed as `Locally Hosted` in the TTS mode selector.
+  </Accordion>
+
+  <Accordion title="Moonbase Alpha">
+    The iconic Moonbase Alpha / `fonix` text-to-speech synthesizer. Produces the classic robotic voice.
+
+    **Requirements:** No API key required.
+  </Accordion>
+
+  <Accordion title="Deepgram TTS">
+    Deepgram Aura text-to-speech voices via the VoiceWizardPro cloud backend.
+
+    **Requirements:** VoiceWizardPro subscription. Available as `Deepgram Aura (Pro Only)` in the mode selector.
+  </Accordion>
+
+  <Accordion title="VoiceWizardPro">
+    Routes TTS through the VoiceWizardPro cloud service, which provides access to Pro-tier engines (Azure, Amazon Polly, Google, IBM Watson, Deepgram) without managing your own API keys.
+
+    **Requirements:** VoiceWizardPro subscription and Pro key. Enable **Use Pro** in the **Provider** tab and paste your key.
+
+    VoiceWizardPro also handles translation before TTS, so you can speak in one language and have both text and audio delivered in another.
+  </Accordion>
+</AccordionGroup>
+
+## Voice settings
+
+The following controls appear in the **TTS** tab and apply to engines that support them:
+
+| Setting | Description |
+|---------|-------------|
+| **Pitch** | Shifts the voice pitch up (higher value) or down (lower value). |
+| **Rate** | Controls speech speed. Higher values speak faster. |
+| **Volume** | Sets the TTS audio output level. |
+
+## Audio output and virtual cable
+
+TTS Voice Wizard outputs TTS audio to the device selected in **Settings → Audio → Output Device**. To use TTS as your microphone in VRChat:
+
+1. Install a virtual audio cable (e.g., VB-Cable or Voicemeeter).
+2. Set the TTS output device to your virtual cable input.
+3. Set VRChat's microphone input to the virtual cable output.
+
+<Tip>
+  Using a virtual cable lets your TTS voice appear as your actual microphone in VRChat — other players hear your TTS voice through voice chat, not just the chatbox. See [Virtual cable setup](/advanced/virtual-cable) for step-by-step instructions.
+</Tip>
+
+## Voice presets
+
+Voice presets let you save and restore a complete TTS configuration — engine, voice, accent, language, translation language, style, pitch, rate, and volume — in a single click.
+
+Each preset stores:
+- TTS engine and voice selection
+- Accent and language settings
+- Translation language
+- Speaking style (for engines that support it)
+- Pitch, rate, and volume values
+
+**To save a preset:** Configure your TTS settings, then click **Save preset** in the Presets panel. The preset is named automatically (e.g., `preset 1`) and can be renamed.
+
+**To load a preset:** Select it from the presets dropdown. All saved settings are applied immediately.
+
+Presets are stored in your TTS Voice Wizard settings file and persist across app restarts.

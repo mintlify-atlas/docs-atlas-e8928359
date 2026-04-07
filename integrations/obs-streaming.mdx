@@ -1,0 +1,82 @@
+---
+title: 'OBS text for streaming'
+description: 'Display your speech as a text overlay in OBS for streaming and recording — no avatar or VRChat needed.'
+---
+
+Display your recognized speech as a real-time text overlay in OBS. TTS Voice Wizard writes output to a text file and optionally shows a floating window with a green screen background, giving you two clean ways to add live captions to your stream or recording.
+
+## How it works
+
+When OBS text output is enabled, TTS Voice Wizard writes the recognized text to a file at:
+
+```
+Output\TextOutput\OBSText.txt
+```
+
+OBS reads this file continuously through a **Text (GDI+)** source. Alternatively, you can capture TTS Voice Wizard's floating text window directly using OBS's **Window Capture** source.
+
+Both methods work without VRChat running — this integration is useful for desktop streaming, IRL content, or any scenario where you want live captions.
+
+## Setup
+
+<Steps>
+  <Step title="Enable OBS text output">
+    In TTS Voice Wizard, enable the **OBS Text** toggle. The app will begin writing recognized speech to the output file on each transcription.
+  </Step>
+  <Step title="Locate the output file">
+    The output file is written to the `Output\TextOutput\OBSText.txt` path inside the TTS Voice Wizard installation directory. Note the full path for the next step.
+  </Step>
+  <Step title="Add a text source in OBS">
+    In OBS, add a **Text (GDI+)** source to your scene. In its properties:
+
+    - Enable **Read from file**
+    - Point the file path to `OBSText.txt` in the TTS Voice Wizard output directory
+    - Adjust font, size, and color to match your stream style
+
+    The default font size in TTS Voice Wizard is **36pt**.
+  </Step>
+  <Step title="(Alternative) Use Window Capture">
+    Instead of a text file, you can capture TTS Voice Wizard's floating text window directly:
+
+    - Enable the floating text window in TTS Voice Wizard settings
+    - In OBS, add a **Window Capture** source and select the TTS Voice Wizard window
+    - Apply a **Chroma Key** filter if using green screen mode (see below)
+  </Step>
+  <Step title="Position your overlay">
+    Move and resize the text source in your OBS scene. Lock its position once you are happy with the layout.
+  </Step>
+</Steps>
+
+## Green screen mode
+
+TTS Voice Wizard has a built-in green screen background option for the floating text window. When enabled, the window background becomes solid green, making it easy to key out in OBS.
+
+To use it:
+
+1. Enable **Green Screen** in TTS Voice Wizard settings.
+2. In OBS, right-click your Window Capture source and add a **Chroma Key** filter.
+3. Set the key color to green and adjust the similarity and smoothness sliders until the background disappears cleanly.
+
+<Tip>
+  Green screen mode combined with OBS chroma key gives you a clean transparent text overlay without needing a separate text file source.
+</Tip>
+
+## Minimize to toolbar
+
+TTS Voice Wizard can minimize to a compact toolbar — useful when you want speech recognition active but do not want the full app window visible on screen or in your capture.
+
+Enable **Minimize to toolbar** in settings. The app collapses to a small bar that stays accessible without occupying screen space.
+
+<Note>
+  The floating text window always stays on top of other windows when enabled, so it remains visible in Window Capture even if you switch focus to another application.
+</Note>
+
+## Settings reference
+
+| Setting | Default | Description |
+|---|---|---|
+| OBS text output | Off | Writes recognized speech to `OBSText.txt` |
+| Green screen | Off | Sets the floating window background to solid green for chroma key |
+| Font size | 36pt | Font size for the floating text window |
+| Hide text delay | On (10 s) | Clears the text file and floating window after a period of silence |
+| Minimize to toolbar | Off | Collapses the app to a compact toolbar |

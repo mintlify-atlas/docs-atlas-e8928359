@@ -1,97 +1,65 @@
 ---
-title: "Introduction"
-description: "Welcome to the new home for your documentation"
+title: "TTS Voice Wizard"
+description: "A voice for everyone. Convert speech to text, text to speech, and send your words to VRChat — with 15+ TTS engines, real-time translation, and powerful integrations."
 ---
 
-## Setting up
+TTS Voice Wizard is a free Windows desktop app that gives you a voice in VRChat and beyond. Whether you're mute, have a speech disability, or simply want a custom TTS voice, TTS Voice Wizard bridges the gap — sending your words as live text to your avatar's chatbox or a floating speech bubble.
 
-Get your documentation site up and running in minutes.
-
-<Card
-  title="Start here"
-  icon="rocket"
-  href="/quickstart"
-  horizontal
->
-  Follow our three step quickstart guide.
-</Card>
-
-## Make it yours
-
-Design a docs site that looks great and empowers your users.
-
-<Columns cols={2}>
-  <Card
-    title="Edit locally"
-    icon="pen-to-square"
-    href="/development"
-  >
-    Edit your docs locally and preview them in real time.
+<CardGroup cols={2}>
+  <Card title="Quick Start" icon="rocket" href="/quickstart">
+    Get up and running in minutes — download, install, and speak your first words in VRChat.
   </Card>
-  <Card
-    title="Customize your site"
-    icon="palette"
-    href="/essentials/settings"
-  >
-    Customize the design and colors of your site to match your brand.
+  <Card title="Installation" icon="download" href="/installation">
+    System requirements and step-by-step installation instructions for Windows.
   </Card>
-    <Card
-    title="Set up navigation"
-    icon="map"
-    href="/essentials/navigation"
-  >
-    Organize your docs to help users find what they need and succeed with your product.
+  <Card title="Text in VRChat" icon="comment" href="/text-in-vrchat">
+    Set up your avatar to display your speech using KillFrenzyAvatarText or VRChat Chatbox.
   </Card>
-  <Card
-    title="API documentation"
-    icon="terminal"
-    href="/api-reference/introduction"
-  >
-    Auto-generate API documentation from OpenAPI specifications.
+  <Card title="VoiceWizardPro" icon="star" href="/pro/overview">
+    Unlock premium voices from Azure, Amazon Polly, Google Cloud, and more.
   </Card>
-</Columns>
+</CardGroup>
 
-## Create beautiful pages
+## Key features
 
-Everything you need to create world-class documentation.
+<CardGroup cols={2}>
+  <Card title="Speech to Text" icon="microphone" href="/features/speech-to-text">
+    Choose from Azure, Whisper, Vosk, Deepgram, ElevenLabs, and Windows built-in recognition.
+  </Card>
+  <Card title="Text to Speech" icon="volume-high" href="/features/text-to-speech">
+    Over 100 voices across 15+ TTS engines — pick the voice that suits you.
+  </Card>
+  <Card title="Translation" icon="language" href="/features/translation">
+    Translate your speech into 50+ languages in real time using Azure or DeepL.
+  </Card>
+  <Card title="Voice Commands" icon="wand-magic-sparkles" href="/features/voice-commands">
+    Trigger VRChat avatar OSC parameters hands-free with spoken phrases.
+  </Card>
+  <Card title="Spotify & Media" icon="music" href="/integrations/spotify-media">
+    Display the song currently playing on Spotify or any Windows media player in your chatbox.
+  </Card>
+  <Card title="Heart Rate" icon="heart-pulse" href="/integrations/heart-rate">
+    Show your live heart rate in VRChat using Pulsoid or HRtoVRChat_OSC.
+  </Card>
+</CardGroup>
 
-<Columns cols={2}>
-  <Card
-    title="Write with MDX"
-    icon="pen-fancy"
-    href="/essentials/markdown"
-  >
-    Use MDX to style your docs pages.
-  </Card>
-  <Card
-    title="Code samples"
-    icon="code"
-    href="/essentials/code"
-  >
-    Add sample code to demonstrate how to use your product.
-  </Card>
-  <Card
-    title="Images"
-    icon="image"
-    href="/essentials/images"
-  >
-    Display images and other media.
-  </Card>
-  <Card
-    title="Reusable snippets"
-    icon="recycle"
-    href="/essentials/reusable-snippets"
-  >
-    Write once and reuse across your docs.
-  </Card>
-</Columns>
+## Getting started
 
-## Need inspiration?
+<Steps>
+  <Step title="Download TTS Voice Wizard">
+    Grab the latest release from [GitHub Releases](https://github.com/VRCWizard/TTS-Voice-Wizard/releases) and extract the ZIP file.
+  </Step>
+  <Step title="Choose your speech recognition method">
+    Select a speech recognition engine in the app — Windows built-in recognition requires no API key and works immediately.
+  </Step>
+  <Step title="Pick a TTS voice">
+    Choose a text-to-speech engine and voice. System Speech is free and built in; VoiceWizardPro unlocks hundreds of premium cloud voices.
+  </Step>
+  <Step title="Connect to VRChat">
+    Enable OSC in VRChat (**Action Menu → Options → OSC → Enable**), then start speaking — your words will appear on your avatar.
+  </Step>
+</Steps>
 
-<Card
-  title="See complete examples"
-  icon="stars"
-  href="https://mintlify.com/customers"
->
-  Browse our showcase of exceptional documentation sites.
-</Card>
+<Note>
+  TTS Voice Wizard works outside VRChat too — use it for OBS streaming text, Discord calls, or any situation where you need a voice.
+</Note>

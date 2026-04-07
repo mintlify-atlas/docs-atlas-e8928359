@@ -1,0 +1,83 @@
+---
+title: 'Word replacements'
+description: 'Substitute words or phrases in recognized text before they are sent to VRChat or spoken by TTS.'
+---
+
+Word replacements let you define a list of find-and-replace rules that run on recognized text before it is sent to VRChat or spoken by TTS. Each rule maps a source word or phrase to a replacement string.
+
+Common use cases:
+
+- Replace profanity or sensitive words with cleaner alternatives
+- Expand shorthand abbreviations into full phrases
+- Correct words that your STT engine consistently mishears
+- Substitute long names or product names with shorter versions
+
+<Tip>Use word replacements to expand shorthand — for example, map "lol" to "laughing out loud" so your chatbox always displays the full phrase.</Tip>
+
+## How word replacements work
+
+When TTS Voice Wizard finishes recognizing a phrase, it scans the text against every enabled replacement rule in order. Matching is case-insensitive, so "Hello", "hello", and "HELLO" all match a rule for "hello".
+
+Replacements can be applied either before or after TTS audio generation, depending on the **Replace before TTS** toggle:
+
+- **Replace before TTS on** — replacements run before text is sent to both TTS audio and VRChat
+- **Replace before TTS off** — TTS receives the original text; replacements apply only to what is written to VRChat
+
+## Setting up word replacements
+
+<Steps>
+  <Step title="Open the Word Replacements tab">
+    In TTS Voice Wizard, navigate to the **Word Replacements** tab.
+  </Step>
+  <Step title="Enter the source word or phrase">
+    Type the word or phrase you want to find in the left column of the entry fields.
+  </Step>
+  <Step title="Enter the replacement">
+    Type the replacement text in the right column.
+  </Step>
+  <Step title="Add the rule">
+    Click **Add** (or the equivalent button) to add the rule to the list. It appears in the checked list with the format `N | source ---> replacement`.
+  </Step>
+  <Step title="Enable or disable individual rules">
+    Each rule has a checkbox. Only checked rules are applied. Uncheck a rule to disable it without deleting it.
+  </Step>
+  <Step title="Optionally enable word boundaries">
+    Toggle **Use Word Boundaries** to match whole words only. With this on, a rule for "its" will not match the word "bits".
+  </Step>
+</Steps>
+
+## Word boundary matching
+
+When **Use Word Boundaries** is enabled, TTS Voice Wizard uses regex-based boundary detection before applying each replacement:
+
+- If the source phrase starts and ends with a letter, digit, or underscore (`[a-zA-Z0-9_]`), a standard `\b` word boundary is used.
+- If the source phrase starts or ends with a special character (e.g., `$`, `#`), a custom boundary pattern is used that checks for the absence of adjacent word characters: `(?<![\w])...(?![\w])`.
+
+This means punctuation attached to a word is handled correctly. For example, a rule for "ok" with word boundaries enabled will match "ok" and "ok," but not "okay".
+
+<Note>Word boundary detection checks both the first and last character of the source phrase independently. A phrase like `$5` uses the special-character boundary pattern because `$` is not a word character, even though `5` is.</Note>
+
+## Import and export
+
+You can save and restore your replacements list using the import/export buttons in the **Word Replacements** tab. Replacements are stored in a delimited format (`key¬value;`) and saved with your TTS Voice Wizard settings profile.
+
+To move your replacements to another machine or share them:
+
+1. Click **Export** to save your replacements to a file.
+2. On the target machine, click **Import** and select the file.
+
+## Example rules
+
+| Source | Replacement | Notes |
+|--------|-------------|-------|
+| lol | laughing out loud | Expands common shorthand |
+| brb | be right back | Expands common shorthand |
+| idk | I don't know | Expands common shorthand |
+| u | you | Fixes informal spelling (enable word boundaries to avoid matching "you") |
+| teh | the | Corrects a common typo/mishear |
+
+## Emoji replacements
+
+TTS Voice Wizard includes a separate **Emoji** tab for mapping spoken phrases to special emoji characters used by KillFrenzyAvatarText (KAT) avatars. These work similarly to word replacements but are specifically for substituting trigger phrases (e.g., "thumbs up", "heart face emoji") with the corresponding KAT glyph characters.
+
+Each emoji entry has a checkbox to enable or disable it individually. The phrases and their mapped glyphs are customizable — the default list includes entries like `<3`, `thumbs up`, `laugh emoji`, and more. Emoji replacements run after word replacements in the processing pipeline.

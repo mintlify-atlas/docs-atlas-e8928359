@@ -1,0 +1,47 @@
+---
+title: "VRChat contact counters"
+description: "Count VRChat contact receiver interactions and display the totals in your chatbox."
+---
+
+Contact counters track how many times a VRChat contact receiver parameter fires and display the running total in your chatbox. Common uses include counting hugs, pats, boops, or any touch interaction on your avatar.
+
+TTS Voice Wizard supports up to **10 independent counters**.
+
+## How it works
+
+VRChat sends avatar parameter changes via OSC to port 9001. When a contact receiver fires, TTS Voice Wizard detects the change, increments the matching counter, and sends a message to the VRChat chatbox with the updated count.
+
+## Setting up counters
+
+<Steps>
+  <Step title="Enable the VRChat Listener">
+    In TTS Voice Wizard, enable the **VRChat Listener** toggle. This starts listening on port 9001 for avatar parameter data from VRChat.
+  </Step>
+  <Step title="Configure your avatar contact receiver">
+    In Unity, add a VRChat Contact Receiver component to your avatar and set it to write to an avatar parameter (e.g., `HugReceiver`).
+  </Step>
+  <Step title="Set up the counter in TTS Voice Wizard">
+    In the **Counters** tab:
+    - Enter the OSC parameter name matching your contact receiver (e.g., `HugReceiver`)
+    - Write a display message (e.g., `You have been hugged {count} times!`)
+  </Step>
+  <Step title="Test">
+    When someone touches the contact receiver on your avatar, the counter increments and the message appears in your VRChat chatbox.
+  </Step>
+</Steps>
+
+## Counter settings
+
+| Setting | Description |
+|---------|-------------|
+| Parameter name | The OSC parameter name from your avatar's contact receiver |
+| Display message | The chatbox message — use `{count}` as a placeholder for the current total |
+| Reset on start | Counters reset to 0 each time the app restarts |
+
+<Note>
+  The VRChat Listener must be enabled for counters to work. It listens on port 9001 — the same port VRChat sends avatar parameter updates to.
+</Note>
+
+<Tip>
+  Use descriptive messages with the `{count}` placeholder, for example: `I've been booped {count} times tonight 👉`
+</Tip>

@@ -1,0 +1,114 @@
+---
+title: 'Translation'
+description: 'Translate your spoken words into another language before sending to VRChat or speaking via TTS.'
+---
+
+TTS Voice Wizard can translate your spoken words into another language before they reach VRChat and/or before they are spoken by TTS. This lets you communicate across language barriers — speak in your native language and have VRChat display (and optionally speak) translated text.
+
+## Translation modes
+
+You can enable translation independently for the chatbox output and the TTS voice:
+
+**Translate to VRChat** — The translated text is sent to the VRChat chatbox. Other players read the translated version of what you said.
+
+**Translate TTS voice** — The translated text is also spoken aloud by TTS. Your TTS voice speaks in the target language rather than your spoken language.
+
+Both modes can be active at the same time. If neither is enabled, recognized text passes through to VRChat and TTS unchanged.
+
+## Translation engines
+
+<AccordionGroup>
+  <Accordion title="Azure Translation">
+    Built into the Azure STT engine. When you use **Azure** as your speech provider and select a translation language, Azure's Cognitive Services Translation API translates the recognized speech in real time — no separate key required beyond your Azure Speech subscription.
+
+    Azure Translation is invoked automatically when:
+    - Azure is selected as the STT provider
+    - A translation language other than "No Translation (Default)" is selected
+    - The **Disable Azure Translation** toggle is off
+
+    The translated string arrives alongside the recognized text in a single API call, making it the lowest-latency translation option.
+  </Accordion>
+
+  <Accordion title="DeepL">
+    [DeepL](https://deepl.com) is used as the translation engine when a non-Azure STT provider is active (Vosk, Whisper, Windows Built-in, etc.) and a translation language is configured.
+
+    **Requirements:** A DeepL API key (free tier available at [deepl.com/pro](https://www.deepl.com/pro)) entered in the Provider tab.
+
+    DeepL is known for producing more natural-sounding translations than many competing services, particularly for European languages.
+  </Accordion>
+
+  <Accordion title="VoiceWizardPro Translation">
+    With a VoiceWizardPro subscription and the **Pro Translation** toggle enabled, translation is handled by the VoiceWizardPro cloud backend. This works with any STT provider and does not require your own Azure or DeepL keys.
+
+    When Pro Translation is active, the translated text is returned alongside the TTS audio in a single request, which reduces latency compared to separate translation and TTS calls.
+  </Accordion>
+</AccordionGroup>
+
+## Supported languages
+
+TTS Voice Wizard supports 50+ languages for both input and output. Languages are loaded from `Assets/languages/languages.json` at startup and populate the **Spoken Language** and **Translation Language** dropdowns.
+
+Each language entry includes codes for Azure, Whisper, DeepL, and Pro, so the correct code is used automatically depending on which engine is active.
+
+<Note>The full list of supported languages is maintained on the [GitHub wiki](https://github.com/VRCWizard/TTS-Voice-Wizard/wiki).</Note>
+
+## Configuration
+
+| Setting | Location | Description |
+|---------|----------|-------------|
+| **Spoken language** | Main window dropdowns | The language you speak in. Sets the STT recognition language. |
+| **Translation language** | Main window dropdowns | The target language. Set to "No Translation (Default)" to disable translation. |
+| **Translate TTS voice** | Translation toggles | When enabled, TTS speaks in the translation language rather than your spoken language. |
+| **Translate to VRChat** | Translation toggles | When enabled, VRChat receives the translated text instead of the original. |
+| **Show both languages** | Translation toggles | Displays both the original and translated text in the chatbox, using a configurable format string. |
+
+### Custom dual-language format
+
+When **Show both languages** is enabled, you can customize the chatbox output with a template string using these placeholders:
+
+| Placeholder | Value |
+|-------------|-------|
+| `{originalText}` | The recognized text in your spoken language |
+| `{translatedText}` | The translated text |
+| `{inputLangName}` | Full name of the spoken language |
+| `{outputLangName}` | Full name of the translation language |
+| `{inputLangCode}` | Language code of the spoken language |
+| `{outputLangCode}` | Language code of the translation language |
+| `{nline}` | Line break character (VRChat uses `\u2028`) |
+
+**Example template:**
+```
+{originalText}{nline}{translatedText}
+```
+
+## Example workflow: English to Japanese
+
+<AccordionGroup>
+  <Accordion title="Step-by-step: English speech → Japanese chatbox + TTS">
+    This example assumes you are using Azure STT and Azure TTS.
+
+    <Steps>
+      <Step title="Configure Azure">
+        Enter your Azure subscription key and region in the **Provider** tab and click **Apply**.
+      </Step>
+      <Step title="Set spoken language">
+        In the **Spoken Language** dropdown, select **English (en-US)** (or the closest match to your accent).
+      </Step>
+      <Step title="Set translation language">
+        In the **Translation Language** dropdown, select **Japanese**.
+      </Step>
+      <Step title="Enable translation modes">
+        Enable **Translate to VRChat** so the chatbox shows Japanese text.
+        Optionally enable **Translate TTS voice** if you want Azure TTS to speak in Japanese.
+      </Step>
+      <Step title="Select Azure TTS voice">
+        In the **TTS** tab, select a Japanese Azure neural voice (e.g., `ja-JP-NanamiNeural`).
+      </Step>
+      <Step title="Start speaking">
+        Click **Speech to Text** and speak in English. TTS Voice Wizard sends Japanese text to your VRChat chatbox — and if TTS voice translation is enabled, speaks the Japanese translation aloud.
+      </Step>
+    </Steps>
+  </Accordion>
+</AccordionGroup>
+
+<Note>VoiceWizardPro unlocks full multilingual translation without needing your own Azure or DeepL API key. Visit the [Patreon](https://www.patreon.com/ttsvoicewizard) for subscription details.</Note>

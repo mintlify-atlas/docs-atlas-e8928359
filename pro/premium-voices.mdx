@@ -1,0 +1,132 @@
+---
+title: "Premium voices"
+description: "Hundreds of neural voices from Azure, Amazon Polly, Google Cloud, and IBM Watson — no API key setup required."
+---
+
+VoiceWizardPro unlocks hundreds of high-quality voices from leading cloud TTS providers — no API key setup required. Select a provider in the TTS tab, pick your language and voice, and you're ready to go.
+
+<Tabs>
+  <Tab title="Microsoft Azure">
+    Azure offers the largest and most expressive voice catalog available in TTS Voice Wizard. Neural voices support SSML (Speech Synthesis Markup Language), enabling fine-grained control over delivery style, pitch, and rate.
+
+    **Highlights**
+
+    - Hundreds of neural voices across 70+ languages and regional locales
+    - SSML support for pitch, rate, and volume control via `<prosody>` tags
+    - Expressive styles including: `cheerful`, `sad`, `angry`, `excited`, `friendly`, `whispering`, `shouting`, `terrified`, `unfriendly`, `newscast`, `customerservice`, and more
+    - Wide regional coverage: en-US, en-GB, en-AU, en-CA, en-IN, en-NZ, en-ZA, and dozens of other locales across Arabic, Chinese, Spanish, French, German, Japanese, and more
+
+    **Example voices**
+
+    | Voice | Locale |
+    |-------|--------|
+    | Jenny | en-US |
+    | Guy | en-US |
+    | Aria | en-US |
+    | Sonia | en-GB |
+    | Ryan | en-GB |
+    | Natasha | en-AU |
+    | Clara | en-CA |
+
+    Voices are loaded from a local voice list and filtered by the language you select in the **Accent** dropdown.
+  </Tab>
+  <Tab title="Amazon Polly">
+    Amazon Polly provides both standard and neural voices across a broad set of languages, with solid naturalness and low latency.
+
+    **Highlights**
+
+    - Neural and standard voice engines
+    - SSML support with Polly-specific extensions: `auto-breaths`, `whispered`, and `soft` phonation effects
+    - Multiple English variants: en-US, en-GB, en-AU, en-IN, en-NZ, en-ZA
+
+    **Supported languages include**
+
+    Arabic, Catalan, Chinese (Cantonese and Mandarin), Danish, Dutch, English, Finnish, French, German, Hindi, Icelandic, Italian, Japanese, Korean, Norwegian, Polish, Portuguese (Brazilian and European), Romanian, Russian, Spanish (Spain, Mexico, US), Swedish, Welsh
+
+    **Example voices**
+
+    | Voice | Locale | Engine |
+    |-------|--------|--------|
+    | Joanna | en-US | Standard / Neural |
+    | Matthew | en-US | Standard / Neural |
+    | Amy | en-GB | Standard / Neural |
+    | Brian | en-GB | Standard / Neural |
+    | Olivia | en-AU | Neural |
+    | Takumi | ja-JP | Standard / Neural |
+    | Mia | es-MX | Standard / Neural |
+  </Tab>
+  <Tab title="Google Cloud TTS">
+    Google Cloud TTS voices are loaded from Google's voice catalog and filtered by language. Voice names include the voice tier — WaveNet and Neural2 voices offer the highest naturalness scores.
+
+    **Highlights**
+
+    - WaveNet and Neural2 voices for natural-sounding output
+    - Voices are listed with their SSML gender (`MALE`, `FEMALE`, `NEUTRAL`)
+    - Style selection is not available for Google voices — pitch and rate are controlled via the standard sliders
+
+    **Supported languages include**
+
+    Arabic, Chinese (Mandarin CN and TW), Czech, Danish, Dutch, English (US, GB, AU, CA, PH), Filipino, Finnish, French, German, Hindi, Hungarian, Indonesian, Italian, Japanese, Korean, Norwegian, Polish, Portuguese, Russian, Spanish, Swedish, Thai, Ukrainian, Vietnamese
+
+    **Example voice name format**
+
+    ```
+    en-US-Wavenet-A | MALE
+    en-US-Neural2-C | FEMALE
+    en-GB-Wavenet-B | MALE
+    ```
+  </Tab>
+  <Tab title="IBM Watson">
+    IBM Watson voices are available in V3 (enhanced neural) and Expressive variants. Expressive voices support emotion-based style selection directly in the **Style** dropdown.
+
+    **Highlights**
+
+    - V3 neural voices and Expressive voices
+    - Expressive voices support Watson-style emotion selection
+    - Style dropdown is enabled when using Watson voices
+
+    **Supported languages**
+
+    Dutch, English (US, GB, AU), French (CA, FR), German, Italian, Japanese, Korean, Portuguese (Brazilian), Spanish (Spain, Latin America, US)
+
+    **Example voices**
+
+    | Voice ID | Language |
+    |----------|----------|
+    | en-US_AllisonV3Voice | English (US) |
+    | en-US_AllisonExpressive | English (US, expressive) |
+    | en-US_EmmaExpressive | English (US, expressive) |
+    | en-GB_CharlotteV3Voice | English (GB) |
+    | en-AU_HeidiExpressive | English (AU, expressive) |
+    | de-DE_BirgitV3Voice | German |
+    | ja-JP_EmiV3Voice | Japanese |
+    | es-ES_LauraV3Voice | Spanish (Spain) |
+  </Tab>
+</Tabs>
+
+## Voice settings
+
+All Pro voices support the following adjustments in TTS Voice Wizard:
+
+- **Pitch** — raise or lower the voice pitch using the pitch slider
+- **Speaking rate** — speed up or slow down delivery using the rate slider
+- **Volume** — adjust output volume independently of system volume
+- **Style** — select an expressive style where supported (Azure and IBM Watson Expressive voices)
+
+<Note>
+  The exact number and availability of voices depends on each provider — voice lists are updated by the providers periodically. TTS Voice Wizard loads voice lists from bundled JSON files that are updated with new releases.
+</Note>
+
+<Tip>
+  Azure voices often have the most style options and best naturalness for VRChat use — start there if you're unsure which provider to pick.
+</Tip>
+
+## Get access
+
+<Card
+  title="Subscribe to unlock premium voices"
+  icon="key"
+  href="/pro/get-key"
+>
+  Subscribe on Ko-Fi or Patreon and activate your VoiceWizardPro key to start using cloud voices immediately.
+</Card>

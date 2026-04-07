@@ -1,0 +1,47 @@
+---
+title: "Playing audio through your microphone"
+description: "Route TTS Voice Wizard audio through a virtual cable so others hear your TTS voice in VRChat."
+---
+
+By default, TTS Voice Wizard plays TTS audio through your speakers or headphones. If you want others in VRChat (or Discord) to hear your TTS voice, you need to route the audio through a virtual audio cable — a software driver that acts as a virtual microphone.
+
+## What you need
+
+- **VB-Audio Virtual Cable** (free) — [download at vb-audio.com/Cable](https://vb-audio.com/Cable/)
+- Alternatively: **VoiceMeeter** (also by VB-Audio) for advanced mixing
+
+## Setup
+
+<Steps>
+  <Step title="Install VB-Audio Virtual Cable">
+    Download and run the installer from [vb-audio.com/Cable](https://vb-audio.com/Cable/). A system restart is required after installation.
+  </Step>
+  <Step title="Set TTS output to the virtual cable">
+    In TTS Voice Wizard, go to **Settings → Audio Output** and select **CABLE Input (VB-Audio Virtual Cable)** as the TTS output device.
+  </Step>
+  <Step title="Set VRChat microphone to the virtual cable">
+    In VRChat settings, change your **Microphone** input to **CABLE Output (VB-Audio Virtual Cable)**.
+  </Step>
+  <Step title="Test">
+    Trigger TTS in TTS Voice Wizard — others in your VRChat instance should hear the TTS voice through your avatar.
+  </Step>
+</Steps>
+
+<Warning>
+  With this setup, your natural voice will **not** be heard in VRChat — only TTS audio passes through the cable. To switch back to your real voice, change the VRChat microphone input back to your physical microphone.
+</Warning>
+
+<Tip>
+  Keep your real microphone selected for speech recognition input in TTS Voice Wizard, and set only the TTS **output** to the virtual cable. This way STT still hears your voice, but VRChat hears TTS.
+</Tip>
+
+## Advanced: mixing real voice and TTS with VoiceMeeter
+
+VoiceMeeter lets you mix your real microphone and TTS audio into a single virtual output. This is useful if you want both your voice and TTS to be audible in VRChat simultaneously.
+
+1. Install VoiceMeeter and configure your microphone as a hardware input
+2. Set TTS Voice Wizard's output to one of VoiceMeeter's virtual inputs
+3. Route both to a VoiceMeeter virtual output
+4. Select that virtual output as your VRChat microphone
+
+Refer to the [VoiceMeeter documentation](https://vb-audio.com/Voicemeeter/) for full setup instructions.

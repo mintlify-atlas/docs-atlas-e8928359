@@ -1,0 +1,89 @@
+---
+title: "ChatGPT integration"
+description: "Connect TTS Voice Wizard to OpenAI ChatGPT to get AI-generated responses read aloud and sent to your VRChat chatbox."
+---
+
+Connect TTS Voice Wizard to OpenAI's ChatGPT so that your recognized speech is sent to the model and the response is spoken back via TTS and displayed in your VRChat chatbox simultaneously.
+
+## How it works
+
+When ChatGPT mode is enabled, your transcribed speech is passed to the OpenAI API instead of (or in addition to) being sent directly to VRChat. The API response is:
+
+- Spoken aloud through your configured TTS voice
+- Sent to the VRChat chatbox via OSC
+- Sent to the KAT overlay if enabled
+
+The integration maintains a conversation history across turns, so ChatGPT has context from earlier in the session. You control how many messages are kept in history.
+
+<Warning>
+  OpenAI API usage is billed per token. Monitor your usage and set spending limits at [platform.openai.com](https://platform.openai.com).
+</Warning>
+
+<Note>
+  The ChatGPT integration uses the official OpenAI API — not a browser session or unofficial wrapper.
+</Note>
+
+## Setup
+
+<Steps>
+  <Step title="Get an OpenAI API key">
+    Sign in to [platform.openai.com/api-keys](https://platform.openai.com/api-keys) and create a new secret key. Copy it — you will only see it once.
+  </Step>
+  <Step title="Open the ChatGPT tab">
+    In TTS Voice Wizard, navigate to the **ChatGPT** tab.
+  </Step>
+  <Step title="Enter your API key">
+    Paste your OpenAI API key into the **ChatGPT API Key** field.
+  </Step>
+  <Step title="Select a model">
+    Enter your preferred model name in the **Model** field. Common options:
+
+    ```
+    gpt-4o
+    gpt-4
+    gpt-3.5-turbo
+    ```
+
+    The default is `gpt-3.5-turbo`.
+  </Step>
+  <Step title="Enable ChatGPT">
+    Toggle **Use ChatGPT** on. The integration loads your API key and model on the first request.
+  </Step>
+  <Step title="Start speaking">
+    Trigger speech recognition as normal. Your transcribed text is sent to ChatGPT, and the response is spoken back and displayed in VRChat.
+  </Step>
+</Steps>
+
+## Features
+
+### Conversation history
+
+When **Use context** is enabled, TTS Voice Wizard maintains a rolling conversation history. Each turn appends a user message and an assistant reply to the session. The history is trimmed automatically once it reaches your configured maximum, removing the oldest exchange to keep token usage in check.
+
+The minimum history size is 6 messages (3 exchanges). History size must be an even number — odd values are rounded up automatically.
+
+### Prompt prefix
+
+Enable **Use prompt** to prepend a custom instruction prefix to every message you send. The prefix is joined to your speech with a colon, so ChatGPT receives `<your prompt>: <your speech>` on each turn. For example:
+
+```
+Keep your response under 100 characters
+```
+
+This is useful for keeping responses short enough to fit in the VRChat chatbox. The prompt is entered in the **Prompt** text field below the toggle.
+
+### Context-free mode
+
+Disable **Use context** to send each message independently with no history. Responses are faster and cheaper, but ChatGPT has no memory of previous turns.
+
+## Settings reference
+
+| Setting | Default | Description |
+|---|---|---|
+| Use ChatGPT | Off | Enables the ChatGPT integration |
+| API key | (empty) | Your OpenAI secret key |
+| Model | `gpt-3.5-turbo` | The OpenAI model to use |
+| Use context | On | Maintains conversation history across turns |
+| Max history | 10 | Maximum number of messages kept in history |
+| Use prompt | Off | Prepends a prompt prefix to each message before sending to ChatGPT |
+| Prompt text | `Keep your response under 100 characters` | The prefix text prepended to your speech on each turn |

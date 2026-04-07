@@ -1,0 +1,176 @@
+---
+title: 'Speech to Text'
+description: 'Convert your spoken words to text, send them to VRChat, and optionally pass them to TTS audio.'
+---
+
+Speech to Text (STT) listens to your microphone, converts what you say to text, and sends it to your VRChat chatbox via OSC. If you have a TTS engine enabled, the recognized text is also spoken aloud — or through a virtual cable as your microphone input.
+
+<Tip>Windows Built-in STT is the easiest way to get started — no API key or download needed.</Tip>
+
+## Recognition engines
+
+<Tabs>
+  <Tab title="Windows Built-in">
+    Uses the `System.Speech.Recognition` namespace built into Windows. No setup, no API key, and no internet connection required.
+
+    **How to use:**
+    1. Select **System Speech** in the speech provider dropdown.
+    2. Click the **Speech to Text** button to start listening.
+    3. Speak naturally — recognized text is sent to VRChat and queued for TTS.
+
+    **Notable options:**
+
+    | Option | Description |
+    |--------|-------------|
+    | Recognizer | Choose from installed Windows speech recognizers via the recognizer dropdown. |
+    | Continuous mode | Keep listening after each phrase rather than stopping after one utterance. |
+    | Profanity filter | Toggle masking of profane words in the output. |
+
+    Windows Speech Recognition must be set up in Windows Settings (**Time & Language → Speech**) before use. Install additional language packs there if you need a language other than English.
+  </Tab>
+
+  <Tab title="Azure">
+    Uses Microsoft Azure Cognitive Services Speech SDK. The most accurate cloud-based STT option, with support for 50+ languages, continuous listening, real-time partial results, and built-in translation.
+
+    **Requirements:**
+    - An Azure Cognitive Services key (free tier available at [portal.azure.com](https://portal.azure.com))
+    - Your Azure region (default: `eastus`)
+
+    **How to use:**
+    1. Paste your subscription key and region into the **Provider** tab, then click **Apply**.
+    2. Select **Azure** in the speech provider dropdown.
+    3. Click the **Speech to Text** button. Enable the continuous toggle to keep listening between phrases.
+
+    **Notable options:**
+
+    | Option | Description |
+    |--------|-------------|
+    | Continuous mode | Keeps the recognizer running across multiple phrases without pressing the button again. |
+    | Phrase list | Provide comma-separated words or phrases to bias recognition toward domain-specific vocabulary. |
+    | Profanity filter | Toggle between masked and raw profanity output. |
+    | Partial results | Show interim transcription in VRChat while you are still speaking. |
+    | Explicit punctuation | Request punctuation marks in the transcription output. |
+    | Translation | Azure STT can translate speech directly — no separate DeepL key required. |
+
+    <Note>Azure requires your own API key, or a VoiceWizardPro subscription if you use the Pro Azure option.</Note>
+  </Tab>
+
+  <Tab title="Vosk">
+    A free, open-source, offline speech recognition library. No internet connection required after you download a model.
+
+    **Requirements:**
+    - A Vosk model folder downloaded from [alphacephei.com/vosk/models](https://alphacephei.com/vosk/models)
+    - The folder selected in **Speech Provider → Local → Vosk Model**
+
+    **How to use:**
+    1. Download a Vosk model and extract it.
+    2. In **Speech Provider → Local**, click the folder selector and choose the folder that *directly* contains the model files (the folder with `graph/`, `readme`, etc.).
+    3. Select **Vosk** in the STT dropdown and click **Speech to Text**.
+
+    When you toggle Vosk off, the model stays loaded in memory (paused). Switch the STT mode away from Vosk to fully free resources.
+
+    <Note>Select the inner model folder, not the outer archive folder, or TTS Voice Wizard will crash.</Note>
+  </Tab>
+
+  <Tab title="Whisper">
+    Local AI-powered STT using [whisper.cpp](https://github.com/ggerganov/whisper.cpp). Runs entirely on your CPU — no internet needed after model download. Higher accuracy than Windows Built-in, especially for accented speech.
+
+    **Requirements:**
+    - A Whisper model (`.bin`) downloaded via the in-app downloader or manually from Hugging Face
+
+    **Available models:**
+
+    | Model | Size | Notes |
+    |-------|------|-------|
+    | ggml-tiny.bin | 75 MB | Fastest, lowest accuracy |
+    | ggml-base.bin | 142 MB | Good balance |
+    | ggml-small.bin | 466 MB | Higher accuracy |
+    | ggml-medium.bin | 1.5 GB | Best accuracy, slowest |
+
+    **How to use:**
+    1. In **Speech Provider → Local → Whisper.cpp Model**, click **Download** and select a model size, or browse to an existing `.bin` file.
+    2. Select **Whisper** in the STT dropdown and click **Speech to Text**.
+    3. If no model is selected, TTS Voice Wizard will auto-download `ggml-tiny.bin` for you.
+
+    Whisper supports configurable silence detection parameters: min duration, max duration, drop start silence, and pause duration.
+
+    VAD (Voice Activity Detection) mode can be enabled for more responsive silence detection.
+  </Tab>
+
+  <Tab title="Deepgram">
+    The fastest and most accurate cloud STT option, powered by Deepgram's Nova-2 model via the VoiceWizardPro backend. Supports single-shot and continuous listening modes.
+
+    **Requirements:**
+    - An active VoiceWizardPro subscription and Pro key
+
+    **How to use:**
+    1. Enable **Use Pro** and paste your Pro key in the **Provider** tab.
+    2. Select **Deepgram (Pro Only)** in the STT dropdown.
+    3. Click **Speech to Text**. Enable **Continuous** to loop automatically.
+
+    Deepgram records audio locally, sends it to the Pro API for transcription, and returns the result. You can tune silence detection with the **Silence Threshold** and **Silence Scale** sliders, and set minimum/maximum audio clip durations.
+
+    <Note>Deepgram STT requires a VoiceWizardPro key. It is not available with your own Deepgram API key through this integration.</Note>
+  </Tab>
+
+  <Tab title="ElevenLabs">
+    Uses ElevenLabs' Speech-to-Text (STS) endpoint as an alternative cloud transcription option.
+
+    **Requirements:**
+    - An ElevenLabs API key configured in the Provider tab
+
+    **How to use:**
+    1. Enter your ElevenLabs API key in the **Provider** tab.
+    2. Select **ElevenLabs STS** in the STT dropdown.
+    3. Click **Speech to Text** to begin a recognition session.
+  </Tab>
+
+  <Tab title="Web Captioner">
+    Bridges with [webcaptioner.com](https://webcaptioner.com) using a browser extension. The browser handles recognition; TTS Voice Wizard receives the transcript over a local connection.
+
+    **Requirements:**
+    - The TTS Voice Wizard browser extension installed in Chrome or Edge
+    - webcaptioner.com open in your browser
+
+    **How to use:**
+    1. Install the browser extension (link in the **Provider** tab).
+    2. Open webcaptioner.com and start captioning.
+    3. Select **Web Captioner** in the STT dropdown and click **Speech to Text**.
+
+    This engine depends on your browser's built-in speech API (typically Google's cloud STT), so accuracy varies by browser.
+  </Tab>
+
+  <Tab title="Text file reader">
+    Polls a text file for changes and submits new content as recognized text. Useful for integrating with other software that writes transcriptions to a file.
+
+    **How to use:**
+    1. Select **Text File Reader** in the STT dropdown.
+    2. Configure the file path in the Provider settings.
+    3. Click **Speech to Text** to start polling.
+
+    Any application that writes plain text to the configured file will have its output passed through the TTS pipeline and sent to VRChat.
+  </Tab>
+
+  <Tab title="WebSocket">
+    Starts a local WebSocket server that accepts plain-text messages from external applications. Any connected client can push text directly into the TTS pipeline.
+
+    **How to use:**
+    1. Select **WebSocket** in the STT dropdown.
+    2. Click **Speech to Text** — TTS Voice Wizard begins listening on the configured WebSocket port.
+    3. Connect your external app to `ws://localhost:<port>` and send text strings.
+
+    This is the most flexible integration point for scripting, game overlays, or other tools that produce transcribed text.
+  </Tab>
+</Tabs>
+
+## Settings reference
+
+| Setting | Description |
+|---------|-------------|
+| **Spoken language** | The language you speak in. Used by Azure, Whisper, and Deepgram to select the correct recognition model. |
+| **Activation word** | (Windows Built-in) A phrase that must be detected before transcription starts. Defaults to "begin quoting me". |
+| **Phrase list** | (Azure) Comma-separated words or phrases that boost recognition accuracy for domain-specific terms. |
+| **Profanity filter** | Masks profane words in the transcription output. Available for Azure and Windows Built-in. |
+| **Continuous mode** | Keeps the recognizer running between phrases without pressing the button each time. |
+
+<Note>Azure and Deepgram are cloud-based and require either your own API key or a VoiceWizardPro subscription. Vosk and Whisper are fully local and work without any internet access after the initial model download.</Note>

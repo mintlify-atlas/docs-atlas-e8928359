@@ -1,0 +1,86 @@
+---
+title: "Installation"
+description: "System requirements and step-by-step instructions for installing TTS Voice Wizard on Windows."
+---
+
+## System requirements
+
+| Requirement | Minimum |
+|-------------|---------|
+| Operating system | Windows 10 or Windows 11 (64-bit) |
+| Architecture | x64 |
+| Network | Local UDP access (for OSC on port 9000) |
+
+Older versions of Windows (8.1, 7) are not officially supported and may not work correctly.
+
+## Installation methods
+
+### Direct download
+
+1. Go to the [GitHub Releases page](https://github.com/VRCWizard/TTS-Voice-Wizard/releases).
+2. Download the latest `TTSVoiceWizard-vX.X.X.X-x64.zip`.
+3. Extract the ZIP to any folder (e.g., `C:\Program Files\TTSVoiceWizard` or your desktop).
+4. Run **TTSVoiceWizard.exe**.
+
+### Scoop package manager
+
+If you use [Scoop](https://scoop.sh/), you can install and update TTS Voice Wizard from the command line:
+
+```bash
+scoop bucket add extras
+scoop install extras/tts-voice-wizard
+```
+
+To update later:
+
+```bash
+scoop update tts-voice-wizard
+```
+
+Scoop installs the app to your user directory and manages updates automatically. Thanks to [babo4d](https://github.com/babo4d) for maintaining the Scoop package.
+
+## First-time setup
+
+<Steps>
+  <Step title="Extract the archive">
+    Right-click the downloaded ZIP and select **Extract All**, then choose a destination folder. Keep all files together — do not move **TTSVoiceWizard.exe** out of its folder.
+  </Step>
+
+  <Step title="Launch the app">
+    Double-click **TTSVoiceWizard.exe**.
+
+    <Warning>
+      Windows SmartScreen may display a blue warning dialog: "Windows protected your PC." This happens because the executable is not code-signed. Click **More info**, then **Run anyway** to continue. The source code is publicly available at [github.com/VRCWizard/TTS-Voice-Wizard](https://github.com/VRCWizard/TTS-Voice-Wizard).
+    </Warning>
+  </Step>
+
+  <Step title="Allow firewall access if prompted">
+    When you first run the app, Windows Firewall may ask if you want to allow network access. Click **Allow access**.
+
+    TTS Voice Wizard uses UDP to send OSC messages to VRChat (default port 9000) and to receive data from the VRChat OSC listener (default port 9001). Blocking firewall access will prevent OSC communication.
+  </Step>
+
+  <Step title="Configure your microphone and speaker">
+    In the app, select your microphone and speaker devices from the dropdowns on the main screen. The default selection uses your Windows default audio devices.
+  </Step>
+</Steps>
+
+## Configuration file location
+
+User settings are stored in the Windows application data folder:
+
+```
+%LOCALAPPDATA%\TTSVoiceWizard\
+```
+
+You can open this folder by pressing **Win+R** and typing the path above. Settings are saved as a `.config` file and persist across app updates.
+
+<Note>
+  The app automatically creates a backup of your settings on each launch. If a settings file becomes corrupted, it restores from the backup automatically so you do not lose your configuration.
+</Note>
+
+## Automatic updates
+
+TTS Voice Wizard includes an auto-updater powered by [AutoUpdater.NET](https://github.com/ravibpatel/AutoUpdater.NET). When a new release is available, the app notifies you at startup. You can also check for updates manually from within the app.
+
+Your settings are preserved across updates — you do not need to reconfigure anything after upgrading.

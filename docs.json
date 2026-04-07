@@ -1,122 +1,82 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "theme": "mint",
-  "name": "Mint Starter Kit",
+  "name": "TTS Voice Wizard",
+  "theme": "almond",
   "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
+    "primary": "#8f9ec5",
+    "light": "#303045",
+    "dark": "#c1cbdc"
   },
-  "favicon": "/favicon.svg",
-  "navigation": {
-    "tabs": [
-      {
-        "tab": "Guides",
-        "groups": [
-          {
-            "group": "Getting started",
-            "pages": [
-              "index",
-              "quickstart",
-              "development"
-            ]
-          },
-          {
-            "group": "Customization",
-            "pages": [
-              "essentials/settings",
-              "essentials/navigation"
-            ]
-          },
-          {
-            "group": "Writing content",
-            "pages": [
-              "essentials/markdown",
-              "essentials/code",
-              "essentials/images",
-              "essentials/reusable-snippets"
-            ]
-          },
-          {
-            "group": "AI tools",
-            "pages": [
-              "ai-tools/cursor",
-              "ai-tools/claude-code",
-              "ai-tools/windsurf"
-            ]
-          }
-        ]
-      },
-      {
-        "tab": "API reference",
-        "groups": [
-          {
-            "group": "API documentation",
-            "pages": [
-              "api-reference/introduction"
-            ]
-          },
-          {
-            "group": "Endpoint examples",
-            "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete",
-              "api-reference/endpoint/webhook"
-            ]
-          }
-        ]
-      }
-    ],
-    "global": {
-      "anchors": [
-        {
-          "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
-          "icon": "book-open-cover"
-        },
-        {
-          "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
-          "icon": "newspaper"
-        }
-      ]
-    }
-  },
+  "favicon": "https://icons.duckduckgo.com/ip3/ttsvoicewizard.com.ico",
   "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
+    "light": "https://media.brand.dev/7c8ab6d4-fa96-4edb-a35e-8c2c91b9b016.png",
+    "dark": "https://media.brand.dev/7c8ab6d4-fa96-4edb-a35e-8c2c91b9b016.png"
   },
   "navbar": {
-    "links": [
-      {
-        "label": "Support",
-        "href": "mailto:hi@mintlify.com"
-      }
-    ],
     "primary": {
-      "type": "button",
-      "label": "Dashboard",
-      "href": "https://dashboard.mintlify.com"
+      "type": "github",
+      "href": "https://github.com/VRCWizard/TTS-Voice-Wizard"
     }
-  },
-  "contextual": {
-    "options": [
-     "copy",
-     "view",
-     "chatgpt",
-     "claude",
-     "perplexity",
-     "mcp",
-     "cursor",
-     "vscode"
-   ]
   },
   "footer": {
     "socials": {
-      "x": "https://x.com/mintlify",
-      "github": "https://github.com/mintlify",
-      "linkedin": "https://linkedin.com/company/mintlify"
+      "github": "https://github.com/VRCWizard/TTS-Voice-Wizard"
     }
+  },
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Documentation",
+        "groups": [
+          {
+            "group": "Get Started",
+            "pages": [
+              "introduction",
+              "quickstart",
+              "installation",
+              "text-in-vrchat"
+            ]
+          },
+          {
+            "group": "Core Features",
+            "pages": [
+              "features/speech-to-text",
+              "features/text-to-speech",
+              "features/translation",
+              "features/word-replacements",
+              "features/voice-commands"
+            ]
+          },
+          {
+            "group": "Integrations",
+            "pages": [
+              "integrations/spotify-media",
+              "integrations/heart-rate",
+              "integrations/battery-life",
+              "integrations/chatgpt",
+              "integrations/obs-streaming"
+            ]
+          },
+          {
+            "group": "Advanced",
+            "pages": [
+              "advanced/osc-setup",
+              "advanced/hotkeys",
+              "advanced/counters",
+              "advanced/virtual-cable",
+              "advanced/troubleshooting"
+            ]
+          },
+          {
+            "group": "VoiceWizardPro",
+            "pages": [
+              "pro/overview",
+              "pro/get-key",
+              "pro/premium-voices"
+            ]
+          }
+        ]
+      }
+    ]
   }
 }
